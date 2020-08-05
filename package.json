@@ -12,8 +12,10 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "prop-types": "^15.7.2",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "react-dom": "^16.13.1",
+        "save": "^2.4.0"
     },
     "devDependencies": {
         "@babel/core": "^7.10.5",
