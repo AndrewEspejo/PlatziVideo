@@ -1,4 +1,4 @@
 # Table of contents
 
-* [Initial page](README.md)
+* [Curso de React Router and Redux](README.md)
 
