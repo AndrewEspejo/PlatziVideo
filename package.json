@@ -1,15 +1,17 @@
 {
     "homepage": "https://AndrewEspejo.github.io/PlatziVideo.git",
-    "name": "PlatziVideo",
+    "name": "platzivideo",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack  --mode production",
-        "start": "webpack-dev-server --open --mode development",
+        "local": "webpack-dev-server --open --mode development",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d dist"
+        "deploy": "gh-pages -d dist",
+        "server": "json-server  initialState.json",
+        "start": "npm-run-all -p local server"
     },
     "keywords": [],
     "author": "",
