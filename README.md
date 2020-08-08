@@ -812,3 +812,335 @@ export default Header;
 
 ## Redux
 
+### ¿Qué es Redux?
+
+Redux nos permite tener un contenedor predecible del estado en aplicaciones creadas con JavaScript. Nos ayuda a escribir aplicaciones que se comportan de una manera consistente, Esto significa que podemos utilizar esta lógica en aplicaciones del lado del cliente, trabajar del lado del servidor o crear aplicaciones para dispositivos móviles.
+
+Uno de los principales uso que tiene Redux es con React pero puede ser implementado en cualquier librería o proyecto que este construido con JavaScript, lo cual incluye a Angular, Vue o algún otro framework o librería.
+
+Redux nace de la arquitectura Flux, tomando inspiración del lenguaje funcional Elm y es creado por Dan Abramov y Andrew Clark en el 2015, Hoy en día es una de las librerías más utilizadas para el manejo del flujo de la información en aplicaciones.
+
+Una de las principales motivaciones para crear Redux nace en resolver un problema y era el manejo del estado y el flujo de nuestras aplicaciones creadas en JavaScript. Redux propone una forma de manejar el estado donde podamos controlar cómo vamos a interactuar con otros elementos \(llamadas a un API\) o interacciones dentro de nuestra aplicación, teniendo en cuenta esto, Redux intenta de predecir las mutaciones que pueda sufrir el estado, creando restricciones de cuando y como pueden ser ejecutadas las actualizaciones en nuestras aplicaciones.
+
+Redux es una librería muy pequeña que se puede incorporar en cualquier proyecto construido en JavaScript y se basa en tres principios:
+
+#### Única fuente de la verdad:
+
+Nuestra aplicación solo debe de tener un único Store y es la única fuente de información.
+
+#### El estado es de solo lectura
+
+La única forma de modificar el estado es emitiendo un acción, este objeto describe lo que va a ocurrir.
+
+#### Los cambios se realizan con funciones puras
+
+Para realizar cambios al estado es necesario utilizar Reducers los cuales son funciones puras que toman el estado anterior, una acción y devuelve un nuevo estado con las modificaciones necesarias.
+
+Teniendo en cuenta esta información continuaremos en el curso explicando cada uno de estos elementos que incorpora Redux en nuestra aplicación Platzi Video.
+
+![](.gitbook/assets/selection_107.png)
+
+![](.gitbook/assets/selection_108.png)
+
+Con Redux vamos a poder manejar el flujo de información de nuestra App Platzi Video.
+
+![](.gitbook/assets/selection_109.png)
+
+### Instalación de Redux
+
+Para instalar Redux, nos dirigimos a nuestra terminal y ejecutamos el siguiente comando dentro de la carpeta de nuestro proyecto
+
+```jsx
+npm install redux react-redux --Save
+```
+
+Ahora, vamos a añadir los elementos necesarios para el uso de Redux.
+
+Lo primero que haremos será crear dos carpetas: **actions** y **reducers** dentro del directorio **src**. Dentro de cada una crearemos un archivo `index.js` 
+
+Ahora, en nuestro index.js, realizaremos una modificación
+
+```javascript
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./routes/App";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+//import HelloWorld from "./components/HelloWorld";
+
+ReactDOM.render(
+    <Provider>
+        <App />
+    </Provider>,
+    document.getElementById("app")
+);
+
+```
+
+### Creando el Store de Redux
+
+Pararemos el contenido de nuestro initialState.json a nuestro index.js, de la siguiente forma:
+
+```javascript
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./routes/App";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+
+//import HelloWorld from "./components/HelloWorld";
+const initialState = {
+    initalState: {
+        mylist: [],
+        trends: [
+            {
+                id: 2,
+                slug: "tvshow-2",
+                title: "In the Dark",
+                type: "Scripted",
+                language: "English",
+                year: 2009,
+                contentRating: "16+",
+                duration: 164,
+                cover: "http://dummyimage.com/800x600.png/99118E/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 3,
+                slug: "tvshow-3",
+                title: "Instinct",
+                type: "Adventure",
+                language: "English",
+                year: 2002,
+                contentRating: "16+",
+                duration: 137,
+                cover: "http://dummyimage.com/800x600.png/302140/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 4,
+                slug: "tvshow-4",
+                title: "Grand Hotel",
+                type: "Comedy",
+                language: "English",
+                year: 2014,
+                contentRating: "16+",
+                duration: 163,
+                cover: "http://dummyimage.com/800x600.png/5472FF/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 5,
+                slug: "tvshow-5",
+                title: "Stargate Atlantis",
+                type: "Scripted",
+                language: "English",
+                year: 2014,
+                contentRating: "16+",
+                duration: 194,
+                cover: "http://dummyimage.com/800x600.png/B36F20/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 6,
+                slug: "tvshow-6",
+                title: "Final Space",
+                type: "Scripted",
+                language: "English",
+                year: 2017,
+                contentRating: "16+",
+                duration: 124,
+                cover: "http://dummyimage.com/800x600.png/CCC539/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 7,
+                slug: "tvshow-7",
+                title: "The InBetween",
+                type: "Drama",
+                language: "English",
+                year: 2011,
+                contentRating: "16+",
+                duration: 179,
+                cover: "http://dummyimage.com/800x600.png/FF7A90/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+        ],
+        originals: [
+            {
+                id: 8,
+                slug: "tvshow-8",
+                title: "Stargate Atlantis",
+                type: "Action",
+                language: "English",
+                year: 2012,
+                contentRating: "16+",
+                duration: 148,
+                cover: "http://dummyimage.com/800x600.png/306880/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 9,
+                slug: "tvshow-9",
+                title: "Alien Highway",
+                type: "Action",
+                language: "English",
+                year: 2019,
+                contentRating: "16+",
+                duration: 128,
+                cover: "http://dummyimage.com/800x600.png/604180/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 10,
+                slug: "tvshow-10",
+                title: "Elementary",
+                type: "Animation",
+                language: "English",
+                year: 2011,
+                contentRating: "16+",
+                duration: 346,
+                cover: "http://dummyimage.com/800x600.png/FF91BA/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 11,
+                slug: "tvshow-11",
+                title: "Strange Angel",
+                type: "War",
+                language: "English",
+                year: 2015,
+                contentRating: "16+",
+                duration: 226,
+                cover: "http://dummyimage.com/800x600.png/45807C/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 12,
+                slug: "tvshow-12",
+                title: "Private Eyes",
+                type: "Comedy",
+                language: "English",
+                year: 2018,
+                contentRating: "16+",
+                duration: 190,
+                cover: "http://dummyimage.com/800x600.png/577380/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+            {
+                id: 13,
+                slug: "tvshow-13",
+                title: "NCIS: Los Angeles",
+                type: "Drama",
+                language: "English",
+                year: 2010,
+                contentRating: "16+",
+                duration: 160,
+                cover: "http://dummyimage.com/800x600.png/5472FF/ffffff",
+                description:
+                    "Vestibulum ac est lacinia nisi venenatis tristique",
+                source: "https://mdstrm.com/video/58333e214ad055d208427db5.mp4",
+            },
+        ],
+    },
+};
+
+ReactDOM.render(
+    <Provider>
+        <App />
+    </Provider>,
+    document.getElementById("app")
+);
+
+```
+
+Realizamos cambios en nuestro componente Home ya que ahora no realizaremos el pedido a nuestra fake API
+
+```jsx
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import "../assets/styles/App.scss";
+import Search from "../components/Search";
+import Categories from "../components/Categories";
+import Carousel from "../components/Carousel";
+import CarouselItem from "../components/CarouselItem";
+
+const Home = ({ mylist, trends, originals }) => {
+    return (
+        <React.Fragment>
+            <Search />
+            {mylist.length > 0 && (
+                <Categories title="My list">
+                    <Carousel>
+                        {mylist.map((item) => (
+                            <CarouselItem key={item.id} {...item} />
+                        ))}
+                    </Carousel>
+                </Categories>
+            )}
+            <Categories title="Trends">
+                <Carousel>
+                    {trends.map((item) => (
+                        <CarouselItem key={item.id} {...item} />
+                    ))}
+                </Carousel>
+            </Categories>
+            <Categories title="Originals">
+                <Carousel>
+                    {originals.map((item) => (
+                        <CarouselItem key={item.id} {...item} />
+                    ))}
+                </Carousel>
+            </Categories>
+        </React.Fragment>
+    );
+};
+
+const mapStateToProps = (state) => {
+    return {
+        mylist: state.mylist,
+        trends: state.trends,
+        originals: state.originals,
+    };
+};
+
+export default connect(mapStateToProps, null)(Home);
+
+```
+
+El index.js de nuestro reducer quedará de la siguiente manera:
+
+```jsx
+const reducer = (state, action) => {
+    return state;
+};
+
+export default reducer;
+
+```
+
+
+
