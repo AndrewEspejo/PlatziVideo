@@ -1,5 +1,6 @@
 import React from "react";
 import "../assets/styles/components/Register.scss";
+import { Link } from "react-router-dom";
 
 const Register = () => (
     <section className="register">
@@ -15,7 +16,9 @@ const Register = () => (
                 />
                 <button className="button">Registrarme</button>
             </form>
-            <a href="">Iniciar sesión</a>
+            <Link to="/Login">
+                <a href="">Iniciar sesión</a>
+            </Link>
         </section>
     </section>
 );
