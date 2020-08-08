@@ -1,12 +1,13 @@
 .main {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     height: 300px;
     border-radius: 0px 0px 40px 40px;
-	margin-top: 0px !important;
-	max-width: 800px !important;
+    margin-top: 0px !important;
+    max-width: 800px !important;
+    min-height: 100px !important;
 }
 
 .main__title {
