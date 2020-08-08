@@ -748,3 +748,67 @@ export default NotFound;
 
 ```
 
+### Componente:Layout
+
+Para que nuestra aplicación maneje el Header y el Footer dentro de cada una de nuestras rutas que hemos creado, necesitemos que estos dos componentes estén permanentemente en cualquier vista. 
+
+Para esto, debemos hacer uso de un nuevo componente llamado Layout,
+
+Dentro de **components**, creamos nuestro componente **Layout** 
+
+```jsx
+import React, { Children } from "react";
+import Header from "./Header";
+import Footer from "./Footer";
+const Layout = ({children}) => (
+    <div className="App">
+        <Header />
+        {children}
+        <Footer />
+    </div>
+);
+
+export default Layout;
+
+```
+
+### Manejando enlaces y configuraciones
+
+Es momento de agregar la configuración para que nos podamos mover entre nuestros elementos. Añadiendo enlaces a distintas partes de nuestra app. Para esto importaremos  &lt;link&gt; de react-router-dom y lo utilizaremos para redirigir a los enlaces que necesitamos. Un ejemplo de esto implementado en el Header sería:
+
+```jsx
+import React from "react";
+import "../assets/styles/components/Header.scss";
+import logo from "../assets/static/logo-platzi-video-BW2.png";
+import userIcon from "../assets/static/user-icon.png";
+import { Link } from "react-router-dom";
+const Header = () => (
+    <header className="header">
+        <Link to="/">
+            <img className="header__img" src={logo} alt="Platzi Video" />
+        </Link>
+        <div className="header__menu">
+            <div className="header__menu--profile">
+                <img src={userIcon} alt="" />
+                <p>Perfil</p>
+            </div>
+            <ul>
+                <li>
+                    <a href="/">Cuenta</a>
+                </li>
+                <li>
+                    <Link to="/login">
+                        <a href="/">Inciar Sesión</a>
+                    </Link>
+                </li>
+            </ul>
+        </div>
+    </header>
+);
+
+export default Header;
+
+```
+
+## Redux
+
