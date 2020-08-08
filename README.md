@@ -1142,5 +1142,116 @@ export default reducer;
 
 ```
 
+## Implementando Redux en Platzi Video
+
+### Creando los reducers
+
+![](.gitbook/assets/redux.gif)
+
+![](.gitbook/assets/redux1.gif)
+
+
+
+1. El Storage es como una base de datos de los estados
+2. El connect permite la conexión entre el componente con el Storage y tiene 2 parámetros. Ejemplo - Connect \(Primero,Segundo\):
+
+   Primero: Envía el estado actual del Storage al componente para que sea utilizado por medio de su props. Para lograrlo, se crea una función que indicará que atributos se quieren utilizar en el componente y luego las asigna a su props.  
+    Segundo: Envía al Reduce la acción que hemos encapsulado y que, por alguna razón que aún no entiendo, al ser llamada por el import en el componente se le atribuye su props. Cuando esta acción llega al Reduce, es identificada mediante el Switch por su atributo Type para su ejecución. Luego, el Reduce envía el resultado al Storage para su actualización.  
+    **Importante**: El Reduce también tiene 2 atributos “\(state, action\)”:
+
+   * state: Es el estado que el Stage envía al Reduce. Por lo tanto, es el estado que se va a actualizar.
+   * action: Es la acción encapsulada que fue enviada por el componente al Reduce para que se actualice el estado del Stage.
+
+
+
+Ya en el proyecto, en nuestros actions vamos a crear el primero el cuál solo se encarga de describir la información que vamos  a hacer y pasar un objeto que tendremos disponible dentro de nuestro reducer.
+
+```jsx
+export const setFavorite = (payload = {
+    type: "SET_FAVORITE",
+    payload,
+});
+
+```
+
+Ahora en nuestro reducer
+
+```jsx
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "SET_FAVORITE":
+            return {
+                ...state,
+                mylist: [...state.mylist, action.payload],
+            };
+        default:
+            return state;
+    }
+};
+
+export default reducer;
+
+```
+
+Preparamos nuestro `CarouselItem.jsx` para que funcione con nuestra función **setFavorite**
+
+```jsx
+import React from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import "../assets/styles/components/CarouselItem.scss";
+import playIcon from "../assets/static/play-icon.png";
+import plusIcon from "../assets/static/plus-icon.png";
+import { setFavorite } from "../actions";
+
+const CarouselItem = (props) => {
+    const { cover, title, year, contentRating, duration } = props;
+    const handleSetFavorite = () => {
+        props.setFavorite({ cover, title, year, contentRating, duration });
+    };
+    return (
+        <div className="carousel-item">
+            <img className="carousel-item__img" src={cover} alt={title} />
+            <div className="carousel-item__details">
+                <div>
+                    <img
+                        className="carousel-item__details--img"
+                        src={playIcon}
+                        alt="Play Icon"
+                    />
+                    <img
+                        className="carousel-item__details--img"
+                        src={plusIcon}
+                        alt="Plus Icon"
+                        onClick={handleSetFavorite}
+                    />
+                </div>
+                <p className="carousel-item__details--title">{title}</p>
+                <p className="carousel-item__details--subtitle">
+                    {`${year} ${contentRating} ${duration}`}
+                </p>
+            </div>
+        </div>
+    );
+};
+
+CarouselItem.propTypes = {
+    cover: PropTypes.string,
+    title: PropTypes.string,
+    year: PropTypes.number,
+    contentRating: PropTypes.string,
+    duration: PropTypes.number,
+};
+
+const mapDispatchToProps = {
+    setFavorite,
+};
+
+export default connect(null, mapDispatchToProps)(CarouselItem);
+
+```
+
+Y con esto ya podemos agregar elementos a nuestra lista de favoritos
+
 
 
