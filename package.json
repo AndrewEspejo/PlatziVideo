@@ -11,7 +11,7 @@
         "predeploy": "npm run build",
         "deploy": "gh-pages -d dist",
         "server": "json-server  initialState.json",
-        "start": "npm-run-all -p local server"
+        "start": "webpack-dev-server --open --mode development"
     },
     "keywords": [],
     "author": "",
@@ -22,7 +22,10 @@
         "prop-types": "^15.7.2",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
+        "react-redux": "^7.2.1",
         "react-router-dom": "^5.2.0",
+        "react-scripts": "^3.4.1",
+        "redux": "^4.0.5",
         "save": "^2.4.0"
     },
     "devDependencies": {
